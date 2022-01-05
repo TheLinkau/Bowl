@@ -19,6 +19,7 @@ Pour l’intégration continue et les tests, nous avons décidé d’utiliser la
 Pour ce qui est de la méthode de gestion de projet, nous avons choisi l’outil de ticketing intégré dans GitHub.
 Après avoir divisé le projet en sous-tâche, chaque sous-tâche a pu être attribué aux personnes du groupe via les tickets et l’outil projet de GitHub (qui nous a également permis de suivre l’avancement de chacun des tickets au fil du temps).  
 Enfin, la méthode agile a été choisi pour la gestion du projet avec des sprints qui se concluait par un rendu au client avec retour de sa part au prochain sprint  
+Une réunion a été organisé avec le client en début de projet pour clarifier ses attentes et deux autres réunions en interne ont été faites en début de sprint pour se mettre d'accord sur le chemin à suivre (cela ne compte évidemment pas les multiples échnages en continu que nous avons en interne pour s'accorder au fil du projet
 Date des sprints :  
 03/01 au 05/01 : 1er sprint  
 02/02 au 04/02 : 2ème et dernier sprint
