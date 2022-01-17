@@ -6,29 +6,84 @@
 //deux coups par frame
 //dix quilles max par frame
 
-var listeJoueur;
-var indexJoueurActuel;
-var playerTours;
-var numCoupsDansLaFrame; //1 ou 2 generalement, ou peut etre 3 si dernier tour
-var numTour; //1 a 10
-var nbFrameMax;
-var finJeu;
+class Logic {
+  constructor(listeJoueur) {
+      this.listeJoueur = listeJoueur;
+      this.indexJoueurActuel = 0;
+      this.playerTours = {};
+      for (var i = 0; i < this.listeJoueur.length; i++) {
+          this.playerTours[this.listeJoueur[i]] = [];
+      }
 
-function init(){
-  listeJoueur = ["Jean", "Yves"];
+      this.numCoupsDansLaFrame = 1; //1 ou 2 generalement, ou peut etre 3 si dernier tour
 
-  indexJoueurActuel = 0;
-
-  playerTours = {};
-  for (var i = 0; i < listeJoueur.length; i++) {
-      playerTours[listeJoueur[i]] = [];
+      this.numTour = 1; //1 a nbFrameMax
+      this.nbFrameMax = 10;
+      this.finJeu = false;
   }
 
-  numCoupsDansLaFrame = 1; //1 ou 2 generalement, ou peut etre 3 si dernier tour
+  /*
+  input : donnee dans le formulaire, peut etre de n'importe quel type
+  return : false si impossible de convertir en int, le nombre int sinon (negatif compris)
+  */
+  parseInput(input){
+    //on test s'il y a seulement des digits (ou le signe -) dans le string avec une expression reguliere
+    var areOnlyNum = /^-?\d+$/.test(input);
+    if(!areOnlyNum) return false;
 
-  nbFrameMax = 10;
-  numTour = 1; //1 a nbFrameMax
-  finJeu = false;
+    var inputNbQuille = parseInt(input, 10);
+    if(isNaN(inputNbQuille)) return false;
+
+    return inputNbQuille;
+  }
+
+
+  /*
+  nbQuille : int du nombre de quille
+  return : boolean, true si la coherence du nombre de quille est respecte, false sinon
+  */
+  isInputNbQuilleOK(nbQuille){
+    return true;
+  }
+
+
+  /*
+  ajoute sans aucune verification le nombre de quille dans la variable membre playerTours en fonction du joueur qui joue
+  change aussi les variables indexJoueurActuel, numCoupsDansLaFrame et numTour
+  nbQuille : int du nombre de quille
+  return : rien
+  */
+  addCoups(nbQuille) {
+    return true;
+  }
+
+
+  updateHTML() {
+    if(this.finJeu){
+
+    }
+  }
+
+
+  /*
+  fonction appelee par le click de l'utilisateur sur le bouton d'envoie
+  input : donnee dans le formulaire, peut etre de n'importe quel type
+  return : boolean, true si tout s'est bien passe, false sinon (mauvais input ou incoherence)
+  */
+  processInput(input){
+    var nbQuille = this.parseInput(input);
+    if(nbQuille === false)return false;
+
+    if(!this.isInputNbQuilleOK(nbQuille)) return false;
+
+    //On rempli les variables
+    this.addCoups(nbQuille);
+
+    //On update le html
+    this.updateHTML();
+
+    return true;
+  }
 }
 
 // //simulation car jai pas encore l'html
@@ -40,54 +95,4 @@ function init(){
 //   alert("ok");
 // }
 
-/*
-fonction appelee par le click de l'utilisateur sur le bouton d'envoie
-input : donnee dans le formulaire, peut etre de n'importe quel type
-return : boolean, true si tout s'est bien passe, false sinon (mauvais input ou incoherence)
-*/
-function processInput(input){
-  //on test s'il y a seulement des digits dans le string avec une expression reguliere
-  var areOnlyNum = /^\d+$/.test(input);
-  if(!areOnlyNum) return false;
-
-  var inputNbQuille = parseInt(input, 10);
-  if(isNaN(inputNbQuille)) return false;
-
-  if(!isInputNbQuilleOK(inputNbQuille)) return false;
-
-  //On rempli les variables
-  addCoups(inputNbQuille);
-
-  //On update le html
-  updateHTML();
-
-  return true;
-}
-
-
-/*
-nbQuille : int du nombre de quille
-return : boolean, true si la coherence du nombre de quille est respecte, false sinon
-*/
-function isInputNbQuilleOK(nbQuille){
-  return true;
-}
-
-
-/*
-
-*/
-function addCoups(nbQuille) {
-  console.log("oui");
-}
-
-
-function updateHTML() {
-  if(finJeu){
-
-  }
-}
-
-
-module.exports = {init, processInput, isInputNbQuilleOK, addCoups, updateHTML, listeJoueur, indexJoueurActuel, playerTours, numCoupsDansLaFrame, numTour
-, nbFrameMax, finJeu};
+module.exports = Logic;
