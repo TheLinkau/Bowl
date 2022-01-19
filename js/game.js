@@ -10,6 +10,10 @@ class Logic {
   constructor(listeJoueur) {
       this.listeJoueur = listeJoueur;
       this.indexJoueurActuel = 0;
+
+      /*
+      playerTours : dictionnaire de la forme {"nomJoueur" : [(5,2),(10),...,(4,6,7)]}
+      */
       this.playerTours = {};
       for (var i = 0; i < this.listeJoueur.length; i++) {
           this.playerTours[this.listeJoueur[i]] = [];
@@ -17,9 +21,32 @@ class Logic {
 
       this.numCoupsDansLaFrame = 1; //1 ou 2 generalement, ou peut etre 3 si dernier tour
 
-      this.numTour = 1; //1 a nbFrameMax
-      this.nbFrameMax = 10;
+      this.numTour = 1; //1 a nbTourMax
+      this.nbTourMax = 10;
       this.finJeu = false;
+  }
+
+  /*
+  fonction appelee par le click de l'utilisateur sur le bouton d'envoie
+  input : donnee dans le formulaire, peut etre de n'importe quel type
+  return : boolean, true si tout s'est bien passe, false sinon (mauvais input ou incoherence)
+  */
+  processInput(input){
+    var nbQuille = this.parseInput(input);
+    if(nbQuille === false)return false;
+
+    if(!this.isInputNbQuilleOK(nbQuille)) return false;
+
+    //On rempli les variables
+    this.addCoups(nbQuille);
+    if(this.numTour > this.nbTourMax){
+      this.finJeu = true;
+    }
+
+    //On update le html
+    this.updateHTML();
+
+    return true;
   }
 
   /*
@@ -48,13 +75,23 @@ class Logic {
 
 
   /*
+  Calcul le score du joueur au tour entree
+  return : false si impossible de calculer le score (strike ou spare en attente, tour invalide (trop tard ou negatif))
+           le nombre int sinon
+  exception : si joueur qui n'existe pas
+  */
+  getScoreJoueur(joueur, tour) {
+    return 0;
+  }
+
+  /*
   ajoute sans aucune verification le nombre de quille dans la variable membre playerTours en fonction du joueur qui joue
   change aussi les variables indexJoueurActuel, numCoupsDansLaFrame et numTour
   nbQuille : int du nombre de quille
-  return : rien
+  return : void
   */
   addCoups(nbQuille) {
-    return true;
+    this.numTour++;
   }
 
 
@@ -63,36 +100,6 @@ class Logic {
 
     }
   }
-
-
-  /*
-  fonction appelee par le click de l'utilisateur sur le bouton d'envoie
-  input : donnee dans le formulaire, peut etre de n'importe quel type
-  return : boolean, true si tout s'est bien passe, false sinon (mauvais input ou incoherence)
-  */
-  processInput(input){
-    var nbQuille = this.parseInput(input);
-    if(nbQuille === false)return false;
-
-    if(!this.isInputNbQuilleOK(nbQuille)) return false;
-
-    //On rempli les variables
-    this.addCoups(nbQuille);
-
-    //On update le html
-    this.updateHTML();
-
-    return true;
-  }
 }
-
-// //simulation car jai pas encore l'html
-// while(numTour <= nbFrameMax){
-//   var input;
-//   do{
-//     input = prompt("Au tour de: "+listeJoueur[indexJoueurActuel]+" pour son coups: "+numCoupsDansLaFrame+"\nEntrer le nombre de quille tombe sur ce coup");
-//   }while(!processInput(input));
-//   alert("ok");
-// }
 
 module.exports = Logic;
