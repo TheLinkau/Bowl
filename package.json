@@ -1,4 +1,30 @@
-{"scripts": {
-"test": "mocha"
-}
+{
+  "name": "bowl",
+  "version": "1.0.0",
+  "description": "Site Score Bowling",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leoANDRIAN/Bowl.git"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leoANDRIAN/Bowl/issues"
+  },
+  "homepage": "https://github.com/leoANDRIAN/Bowl#readme",
+  "dependencies": {
+    "mocha": "^9.1.3"
+  },
+  "devDependencies": {
+    "jsdom": "^19.0.0",
+    "jsdom-global": "3.0.2"
+  }
 }
