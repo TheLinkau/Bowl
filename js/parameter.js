@@ -1,5 +1,5 @@
 // Called quand on clique sur le bouton d'ajout d'un joueur
-export function addPlayer() {
+function addPlayer() {
     var input = document.getElementById("playerName"); // On récupère la liste de joueurs <ul>
     if (input.value) { // S'il y un nom dans le champ
         var li = document.createElement("li"); // On crée un nouveau <li>
@@ -25,7 +25,7 @@ export function addPlayer() {
 }
 
 // Called quand on clique sur JOUER
-export function sendPlayers() {
+function sendPlayers() {
     var players = [];
     var childs = document.getElementById("players").childNodes; // On récupère la liste <ul>
     for (var i = 1; i < childs.length; i++) { // Pour chaque <li> (joueur)
@@ -40,3 +40,8 @@ export function sendPlayers() {
         return false;
     }
 }
+
+module.exports = {
+    addPlayer,
+    sendPlayers
+};
