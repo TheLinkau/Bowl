@@ -1,3 +1,4 @@
+'module.exports = Logic;'
 //SCRIPT LOGIQUE
 
 //300 score max
@@ -102,4 +103,59 @@ class Logic {
   }
 }
 
-module.exports = Logic;
+
+
+function generate_table() {
+    // get the reference for the body
+    var body = document.getElementsByTagName("body")[0];
+  
+    // creates a <table> element and a <tbody> element
+    var tbl = document.createElement("table");
+
+    tbl.setAttribute('class', 'table table-dark');
+    tbl.setAttribute('id', 'myTable');
+
+    var tblhead = document.createElement("thead");
+    var row = document.createElement("tr");
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode(" Partie ");
+    cell.setAttribute('scope', cell.getAttribute('col'));
+ 
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+    // creating all cells
+    for (var i = 1; i < 11; i++) {
+        var cell = document.createElement("th");
+        var cellText = document.createTextNode(i);
+        cell.setAttribute('scope', cell.getAttribute('col'));
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+    }
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode(" Total ");
+    cell.setAttribute('scope', 'col');
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+
+    tblhead.appendChild(row);
+  
+    tbl.appendChild(tblhead);
+
+    var tblbody = document.createElement("tbody");
+  
+    tbl.appendChild(tblbody);
+    // appends <table> into <body>
+    body.appendChild(tbl);
+  }
+
+  function addJoueurTab(){
+    var tbody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+
+
+    var row = document.createElement("tr");
+    var cell = document.createElement("th");
+    cell.setAttribute('rowspan', '2');
+    var cellText  = document.createTextNode('J1');
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+ }
