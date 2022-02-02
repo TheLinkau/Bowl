@@ -1,0 +1,11 @@
+.bg-menu {
+    background-color: #000018;
+}
+
+.row-rank td img {
+    width: 20px;
+}
+
+.row-rank:hover {
+    background-color: #000040;
+}
