@@ -1,4 +1,3 @@
-'module.exports = Logic;'
 //SCRIPT LOGIQUE
 
 //300 score max
@@ -159,3 +158,5 @@ function generate_table() {
     cell.appendChild(cellText);
     row.appendChild(cell);
  }
+
+ module.exports = Logic;
