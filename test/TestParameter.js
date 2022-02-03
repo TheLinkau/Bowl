@@ -13,7 +13,7 @@ const options = { // Je sais pas comment ca marche mais ca empeche erreur à l'a
 // TESTS
 describe('Fonctions parameters.js', function () {
   before(async function () {
-    jdom = await JSDOM.fromFile("html/parameter.html", options);
+    jdom = await JSDOM.fromFile("HTML/parameter.html", options);
     global.window = jdom.window
     global.document = jdom.window.document
   });
