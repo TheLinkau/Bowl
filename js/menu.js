@@ -1,3 +1,4 @@
+// Appelle la fonction getRank() au chargement de la page
 window.onload = function() {
     getRank();
 }
@@ -15,3 +16,7 @@ function getRank() {
     }
     return true;
 }
+
+module.exports = {
+    getRank
+};
