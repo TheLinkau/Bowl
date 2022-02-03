@@ -1,9 +1,11 @@
 window.onload = function() {
     for(var i=1; i<=5; i++) {
         var item = localStorage.getItem("rank"+i);
-        player = item.split(",")[0];
-        score = item.split(",")[1];
-        document.getElementById("rank"+i+"-player").innerHTML = player;
-        document.getElementById("rank"+i+"-score").innerHTML = score;
+        if(item != null) {
+            player = item.split(",")[0];
+            score = item.split(",")[1];
+            document.getElementById("rank"+i+"-player").innerHTML = player;
+            document.getElementById("rank"+i+"-score").innerHTML = score;
+        }
     }
 }
