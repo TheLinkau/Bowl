@@ -1,6 +1,17 @@
-var Logic = require("../js/game.js");
+var Logic
 
 var assert = require('assert');
+const jsdom = require("jsdom");
+const {
+  JSDOM
+} = jsdom;
+let jdom;
+const options = { // Je sais pas comment ca marche mais ca empeche erreur à l'appel d'alert()
+  url: "http://localhost/",
+  beforeParse(window) {
+    window.alert = window.console.log.bind("");
+  },
+};
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -9,7 +20,13 @@ function getRandomIntInclusive(min, max) {
 }
 
 describe('Game logic', function() {
-
+  before(async function () {
+    jdom = await JSDOM.fromFile("HTML/game.html", options);
+    global.window = jdom.window
+    global.document = jdom.window.document
+    console.log('init dom');
+    Logic = require("../js/game.js");
+  });
   describe('constructor', function() {  
 		it('verification des valeurs des variables membres',
     function()
@@ -350,19 +367,6 @@ describe('Game logic', function() {
         assert.equal(gameLogic.parseInput("132b123"), false);
         assert.equal(gameLogic.parseInput("aes"), false);
     });
-  });
-
-  describe('Creation tableau', function() {
-    let joueurs = ['Leo', 'Nathan', 'Théo', 'Toufik'];
-    gameLogic = new Logic(["Jean", "Yves"]);
-
-   /*describe('generate_table()', function () {
-      gameLogic.generate_table();
-      it('Création du tableau', function () {
-        var table = body.getElementsByTagName("table")[0];
-        assert.notEqual(table,null);
-      });
-    });*/
   });
 
 });
