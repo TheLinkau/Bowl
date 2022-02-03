@@ -29,14 +29,14 @@ Date des sprints :
 Point positifs :
 ####
 * Le travail en présentiel a été efficace avec une bonne communication
+* La répartition des tâches a été cohérente et a permis à chacun d'avancer de son côté sans impacter l'avancement des autres
 
 Points négatifs : 
 #### 
 * Pas d'accord préalable sur les normes d'import/export de js, un mixte de normes a conduit à des erreurs de compilation et de tests.
-* Certaines personnes avaient du retard sur leur tâches, ce qui a engendré plus de retard sur les personnes qui attendaient une fonctionnalité pas encore implémenté
+* Nous avons choisi un environnement de travail non maitrisé, ce qui nous as fait perdre beaucoup de temps sur un projet assez court
 
 Propositions de solutions pour les points négatifs :
 ####
 * Avoir plus de cohésion et faire plus de commit pour rassembler plus rapidemment le travail de tout le monde
 * Plus d'explications sur les méthodes utilisés pour que tout le monde utilise les mêmes
-* Meilleure répartition des tâches
