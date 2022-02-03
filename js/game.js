@@ -28,6 +28,7 @@ class Logic {
       this.numTour = 0; //0 a nbTourMax exclus
       this.nbTourMax = 10;
       this.finJeu = false;
+      this.storedArray = ['Leo', 'Nathan', 'Théo', 'Toufik'];
   }
 
   /*
@@ -278,62 +279,144 @@ class Logic {
     }
   }
 }
+console.log('test game session')
+var storedArray = window.sessionStorage.getItem("playersNames");
+
+if(storedArray){
+  storedArray = storedArray.split(",");
+  var logic = new Logic(10, storedArray);
 
 
+  function input(){
+    var input = document.getElementById("score");
+    logic.processInput(input.value);
+    console.log(logic.numTour);
+  }
 
-function generate_table() {
+  function generate_table() {
     // get the reference for the body
     var body = document.getElementsByTagName("body")[0];
   
+    var div = document.getElementById("Tab");
+  
     // creates a <table> element and a <tbody> element
     var tbl = document.createElement("table");
-
+  
     tbl.setAttribute('class', 'table table-dark');
     tbl.setAttribute('id', 'myTable');
-
+  
     var tblhead = document.createElement("thead");
     var row = document.createElement("tr");
     var cell = document.createElement("th");
     var cellText = document.createTextNode(" Partie ");
-    cell.setAttribute('scope', cell.getAttribute('col'));
- 
+    cell.setAttribute('style', 'text-align: center; border-bottom: 1px solid white;');
+  
+  
+  
     cell.appendChild(cellText);
     row.appendChild(cell);
     // creating all cells
-    for (var i = 1; i < 11; i++) {
+    for (var i = 1; i < 10; i++) {
         var cell = document.createElement("th");
         var cellText = document.createTextNode(i);
-        cell.setAttribute('scope', cell.getAttribute('col'));
+        cell.setAttribute('style', 'text-align: center; border-bottom: 1px solid white;');
+        cell.setAttribute('colspan', '2');
         cell.appendChild(cellText);
         row.appendChild(cell);
     }
+  
     var cell = document.createElement("th");
-    var cellText = document.createTextNode(" Total ");
-    cell.setAttribute('scope', 'col');
+    var cellText = document.createTextNode(i);
+    cell.setAttribute('style', 'text-align: center; border-bottom: 1px solid white;');
+    cell.setAttribute('colspan', '3');
     cell.appendChild(cellText);
     row.appendChild(cell);
-
+  
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode(" Total ");
+    cell.setAttribute('style', 'text-align: center; border-bottom: 1px solid white;');
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+  
     tblhead.appendChild(row);
   
     tbl.appendChild(tblhead);
-
+  
     var tblbody = document.createElement("tbody");
   
     tbl.appendChild(tblbody);
     // appends <table> into <body>
-    body.appendChild(tbl);
+    div.appendChild(tbl);
   }
-
-  function addJoueurTab(){
+  
+  function ligne1(j,storedArray){
     var tbody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-
-
     var row = document.createElement("tr");
-    var cell = document.createElement("th");
+    var cell = document.createElement("td");
     cell.setAttribute('rowspan', '2');
-    var cellText  = document.createTextNode('J1');
+    cell.setAttribute('style', 'text-align: center; border: 1px solid white;');
+  
+    var cellText  = document.createTextNode(storedArray[j]);
     cell.appendChild(cellText);
     row.appendChild(cell);
- }
+    var t=0;
+    var c=1;
+    for(var t=0; t<9; t++){
+      for (var c = 0; c < 2; c++) {
+        var cell = document.createElement("td");
+        var cellText  = document.createTextNode('0');
+        cell.setAttribute('style', 'text-align: right; border: 1px solid white;');
+        cell.setAttribute('class', 'P' + j + 'T' + t + 'C'+ c);
+        row.appendChild(cell);
+      }
+    }
+    for (var c = 0; c < 3; c++) {
+      var cell = document.createElement("td");
+      var cellText  = document.createTextNode('0');
+      cell.setAttribute('style', 'text-align: right; border: 1px solid white;');
+      cell.setAttribute('class', 'P' + j + 'T' + 9 + 'C'+ c);
+      row.appendChild(cell);
+    }
+  
+    var cell = document.createElement("td");
+    var cellText  = document.createTextNode('0');
+    cell.setAttribute('style', 'text-align: center; border: 1px solid white;');
+    cell.setAttribute('rowspan', '2');
+    cell.setAttribute('class', 'P' + j + 'Score');
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+  
+    tbody.appendChild(row);   
+  }
+  
+  function ligne2(j){
+    var tbody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+    var row2 = document.createElement("tr");
+    for (var c = 0; c < 9; c++) {
+      var cell2 = document.createElement("td");
+      cell2.setAttribute('style', 'text-align: right; border: 1px solid white;');
+      cell2.setAttribute('colspan', '2');
+      cell2.setAttribute('class', 'P' + j + 'T' + c + 'CT');
+  
+      row2.appendChild(cell2);
+    }
+    var cell2 = document.createElement("td");
+      cell2.setAttribute('style', 'text-align: right; border: 1px solid white;');
+      cell2.setAttribute('colspan', '3');
+      cell2.setAttribute('class', 'P' + j + 'T' + 9 + 'CT');
+      row2.appendChild(cell2);
+    tbody.appendChild(row2);
+  }
+  
+  function addJoueurTab(){
+    if(storedArray){
+      for(var i=0; i<storedArray.length; i++){
+        this.ligne1(i,storedArray);
+        this.ligne2(i);
+      }
+    }
+  }
+  
+}
 
- module.exports = Logic;
+module.exports = Logic;
