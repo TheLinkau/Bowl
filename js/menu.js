@@ -1,4 +1,9 @@
 window.onload = function() {
+    getRank();
+}
+
+// Affiche le top 5 des meilleurs scores de l'application
+function getRank() {
     for(var i=1; i<=5; i++) {
         var item = localStorage.getItem("rank"+i);
         if(item != null) {
@@ -8,4 +13,5 @@ window.onload = function() {
             document.getElementById("rank"+i+"-score").innerHTML = score;
         }
     }
+    return true;
 }
