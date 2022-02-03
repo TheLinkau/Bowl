@@ -37,7 +37,7 @@ function sendPlayers() {
         window.location.href = "game.html" // Go game.html
         return true;
     } else {
-        alert('Il doit y avoir au moins un joueur !'); // On averti user qu'il n'y a pas de joueurs et on fait rien
+        window.alert('Il doit y avoir au moins un joueur !'); // On averti user qu'il n'y a pas de joueurs et on fait rien
         return false;
     }
 }
