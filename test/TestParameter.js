@@ -10,12 +10,13 @@ const options = { // Je sais pas comment ca marche mais ca empeche erreur à l'a
     window.alert = window.console.log.bind("");
   },
 };
-JSDOM.fromFile("html/parameter.html", options).then(dom => { // Créer un dom virtuel à partir d'un fichier (on peut également écrire le dom désiré directement dans ce constructeur)
-  global.window = dom.window
-  global.document = dom.window.document // On set le dom virtuel crée en tant que dom pour les tests mocha
-});
 // TESTS
 describe('Fonctions parameters.js', function () {
+  before(async function () {
+    jdom = await JSDOM.fromFile("html/parameter.html", options);
+    global.window = jdom.window
+    global.document = jdom.window.document
+  });
   describe('addPlayer()', function () {
     it('String non presente dans <input>', function () {
       assert.equal(myModule.addPlayer(), false);
@@ -28,6 +29,10 @@ describe('Fonctions parameters.js', function () {
   describe('sendPlayers()', function() {
     it('Quand on a ajouté au moins un joueur', function() {
       assert.equal(myModule.sendPlayers(), true);
+    });
+    it('Quand on a ajouté aucun joueur', function () {
+      global.document.getElementById("players").innerHTML = '';
+      assert.equal(myModule.sendPlayers(), false);
     });
   });
 });
