@@ -1,22 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE html>
 <html>
 
 <head>
+    <title>BOWLING - Options</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body>
+<body class="w-75 mx-auto text-center bg-appli">
     <script type="text/javascript" src="../js/parameter.js"></script>
-    <h1>PARAMETRAGE PARTIE</h1>
-
-    <input type="text" id="playerName">
-    <button onclick="addPlayer()">ADD</button>
-    <ul id='players' class="list-group">
-    </ul>
-    <button onclick="sendPlayers()">PLAY</button>
+    <img src="../resources/img/logo.jpg"/>
+    <div class="border border-light rounded w-50 mx-auto py-3 mb-3">
+        <h1 class="text-light mb-4 pb-2 border-bottom w-75 mx-auto">Options de la partie</h1>
+        <label for="nbQuilles" class="text-light mb-3">Nombre de quilles</label>
+        <input type="number" id="nbQuilles" name="nbQuilles" min="1" max="10" value="10">
+        <br/>
+        <input type="text" id="playerName" placeholder="Nom du joueur">
+        <button class="btn btn-light" onclick="addPlayer()">Ajouter</button>
+        <ul id='players' class="list-group puce-suppression w-75">
+        </ul>
+    </div>
+    <button class="btn btn-light w-50 mb-5" onclick="sendPlayers()">JOUER</button>
 
 </body>
 

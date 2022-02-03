@@ -1,6 +1,22 @@
-.bg-menu {
+/*******************************************
+Global
+*******************************************/
+
+.bg-appli {
     background-color: #000018;
 }
+
+.mt-negative {
+    margin-top: -50px;
+}
+
+.puce-suppression {
+    list-style-type: none;
+}
+
+/*******************************************
+Menu
+*******************************************/
 
 .row-rank td img {
     width: 20px;

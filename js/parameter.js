@@ -3,7 +3,7 @@ function addPlayer() {
     var input = document.getElementById("playerName"); // On récupère la liste de joueurs <ul>
     if (input.value) { // S'il y un nom dans le champ
         var li = document.createElement("li"); // On crée un nouveau <li>
-        li.className = 'list-group-item';
+        li.className = "list-group-item bg-appli text-light float-left";
         li.textContent = input.value; // Avec le nom du joueur
 
         // Bouton permettant de supprimer le <li>
@@ -11,7 +11,8 @@ function addPlayer() {
         button.addEventListener('click', function() {
             document.getElementById("players").removeChild(this.parentElement);
         });
-        button.textContent = "SUPPRIMER";
+        button.textContent = "x";
+        button.className = "btn btn-danger float-right";
 
         li.appendChild(button); // On ajouter le bouton au <li>
         document.getElementById("players").appendChild(li);
