@@ -206,5 +206,17 @@ describe('Game logic', function() {
     });
   });
 
+  describe('Creation tableau', function() {
+    let joueurs = ['Leo', 'Nathan', 'Théo', 'Toufik'];
+    gameLogic = new Logic(["Jean", "Yves"]);
+
+   /*describe('generate_table()', function () {
+      gameLogic.generate_table();
+      it('Création du tableau', function () {
+        var table = body.getElementsByTagName("table")[0];
+        assert.notEqual(table,null);
+      });
+    });*/
+  });
 
 });
