@@ -2,11 +2,11 @@
 
 ## I/ Rôle de chaque membre du groupe
 
-Léo : Chargé des paramètres de configuration (nombre et nom des joueurs)  
-Théo : Chargé de l’affichage de la page principal  
-Toufik : Chargé de l’affichage du tableau des scores  
-Jean-Yves : Chargé de la gestion de projet  
-Nathan : Chargé de vérification des scores  
+Léo ANDRIANTSIZAFY : Chargé des paramètres de configuration (nombre et nom des joueurs)  
+Théo DABIN : Chargé de l’affichage de la page principal  
+Toufik HAS : Chargé de l’affichage du tableau des scores  
+Jean-Yves LEGRAS : Chargé de la gestion de projet  
+Nathan MERIGEAU : Chargé de la logique mathématique
 
 ## II/ Environnement de travail
 
@@ -23,3 +23,20 @@ Une réunion a été organisé avec le client en début de projet pour clarifier
 Date des sprints :  
 03/01 au 05/01 : 1er sprint  
 02/02 au 04/02 : 2ème et dernier sprint
+
+## IV/ Réunion de rétrospective
+
+Point positifs :
+####
+* Le travail en présentiel a été efficace avec une bonne communication
+
+Points négatifs : 
+#### 
+* Pas d'accord préalable sur les normes d'import/export de js, un mixte de normes a conduit à des erreurs de compilation et de tests.
+* Certaines personnes avaient du retard sur leur tâches, ce qui a engendré plus de retard sur les personnes qui attendaient une fonctionnalité pas encore implémenté
+
+Propositions de solutions pour les points négatifs :
+####
+* Avoir plus de cohésion et faire plus de commit pour rassembler plus rapidemment le travail de tout le monde
+* Plus d'explications sur les méthodes utilisés pour que tout le monde utilise les mêmes
+* Meilleure répartition des tâches
