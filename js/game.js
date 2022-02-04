@@ -281,10 +281,13 @@ class Logic {
 }
 console.log('test game session')
 var storedArray = window.sessionStorage.getItem("playersNames");
+var nbQuilles = Number(window.sessionStorage.getItem("nbQuilles"));
+
 
 if(storedArray){
   storedArray = storedArray.split(",");
-  var logic = new Logic(10, storedArray);
+  
+  var logic = new Logic(nbQuilles, storedArray);
 
 
   function input(){
