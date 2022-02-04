@@ -27,12 +27,18 @@ function addPlayer() {
 
 // Called quand on clique sur JOUER
 function sendPlayers() {
+    const nbQ = Number(document.getElementById("nbQuilles").value);
     var players = [];
     var childs = document.getElementById("players").childNodes; // On récupère la liste <ul>
     for (var i = 1; i < childs.length; i++) { // Pour chaque <li> (joueur)
         players.push(childs[i].firstChild.nodeValue); // On récupère le nom
     }
+    if (nbQ < 1 || nbQ > 10) {
+        window.alert('Il doit y avoir entre 1 et 10 quilles');
+        return false;
+    }
     if (players.length > 0) { // Si on a des joueurs
+        window.sessionStorage.setItem('nbQuilles', nbQ);
         window.sessionStorage.setItem('playersNames', players); // On les stock dans les cookies pour les récupérer dans game
         window.location.href = "game.html" // Go game.html
         return true;
