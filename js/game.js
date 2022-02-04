@@ -37,6 +37,8 @@ class Logic {
   return : boolean, true si tout s'est bien passe, false sinon (mauvais input ou incoherence)
   */
   processInput(input){
+    if(this.finJeu == true)return false;
+
     let nbQuille = this.parseInput(input);
     if(nbQuille === false)return false;
 
@@ -89,10 +91,14 @@ class Logic {
         //else deja gerer
 
       }else if(this.numCoupsDansLaFrame == 2){ //troisieme coup
-        //si premier coup est un strike --> on test le spare
+        //si premier coup est un strike
         if(this.playerTours[this.listeJoueur[this.indexJoueurActuel]][this.numTour][this.numCoupsDansLaFrame-2] == this.nbQuille){
-          if(nbQuille+this.playerTours[this.listeJoueur[this.indexJoueurActuel]][this.numTour][this.numCoupsDansLaFrame-1] > this.nbQuille)
-            return false;
+
+
+          if(this.playerTours[this.listeJoueur[this.indexJoueurActuel]][this.numTour][this.numCoupsDansLaFrame-1] != this.nbQuille)
+            if(nbQuille+this.playerTours[this.listeJoueur[this.indexJoueurActuel]][this.numTour][this.numCoupsDansLaFrame-1] > this.nbQuille)
+              return false;
+
         }
 
         //si deux premier coup est un spare --> limite de this.nbQuille (deja gerer)
@@ -165,8 +171,13 @@ class Logic {
               let scoreProchainCoups = this.playerTours[joueur][tour+1][0];
               let scoreDoubleProchainCoups;
               if(scoreProchainCoups == this.nbQuille){
-                //le prochain coups est de nouveau un strike, donc on prend le coup du prochain tour
-                scoreDoubleProchainCoups = this.playerTours[joueur][tour+2][0];
+                if(tour+1 == this.nbTourMax-1){
+                  scoreDoubleProchainCoups = this.playerTours[joueur][tour+1][1];
+                }else{
+                  //le prochain coups est de nouveau un strike, donc on prend le coup du prochain tour
+                  scoreDoubleProchainCoups = this.playerTours[joueur][tour+2][0];
+                }
+                
               }else{
                 scoreDoubleProchainCoups = this.playerTours[joueur][tour+1][1];
               }
@@ -274,12 +285,71 @@ class Logic {
 
 
   updateHTML() {
-    if(this.finJeu){
+    // console.log(this.playerTours);
 
+    for (let j = 0; j < this.listeJoueur.length; j++) {
+      let str1 = 'P' + j + 'Score';
+      let scoreJ = this.getScoreJoueur(this.listeJoueur[j]);
+        if(isNaN(scoreJ) || scoreJ === false)
+          document.getElementById(str1).textContent = "en attente";
+        else
+          document.getElementById(str1).textContent = scoreJ;
+
+      for (let i = 0; i < this.nbTourMax; i++) {
+        let str2 = 'P' + j + 'T' + i + 'CT';
+
+        let scoreTour = this.getScoreJoueurTour(this.listeJoueur[j], i);
+        if(!(isNaN(scoreTour) || scoreTour === false)){
+          document.getElementById(str2).textContent = scoreTour;
+        }
+
+
+        let nbCoupMax = 2;
+        if(i == this.nbTourMax-1)nbCoupMax=3;
+        for (let k = 0; k < nbCoupMax; k++) {
+          let str3 = 'P' + j + 'T' + i + 'C'+ k;
+          try{
+              let scoreC = this.playerTours[this.listeJoueur[j]][i][k];
+
+              if(i == this.nbTourMax-1){
+                  if(k == 0){ //premier coup
+                    if(scoreC == this.nbQuille){
+                      scoreC = "X";
+                    }
+                  }else if(k == 1){
+                    if(this.playerTours[this.listeJoueur[j]][i][k-1] == this.nbQuille){
+                      if(scoreC == this.nbQuille){ //premier coup
+                        scoreC = "X";
+                      }
+                    }else if(scoreC+this.playerTours[this.listeJoueur[j]][i][k-1] == this.nbQuille){
+                      scoreC = "/";
+                    } 
+                  }else if(k == 2){
+                    if(scoreC == this.nbQuille){ //premier coup
+                      scoreC = "X";
+                    }
+                  }
+              }else{
+                if(k == 0){ //premier coup
+                    if(scoreC == this.nbQuille){
+                      scoreC = "X";
+                    }
+                }else if(k == 1){ //deuxieme coup
+                  if(scoreC+this.playerTours[this.listeJoueur[j]][i][k-1] == this.nbQuille){
+                    scoreC = "/";
+                  }
+                }
+              }
+
+
+              document.getElementById(str3).textContent = scoreC;
+          }catch(error){}
+        }
+      }
     }
   }
 }
-console.log('test game session')
+
 var storedArray = window.sessionStorage.getItem("playersNames");
 
 if(storedArray){
@@ -290,7 +360,6 @@ if(storedArray){
   function input(){
     var input = document.getElementById("score");
     logic.processInput(input.value);
-    console.log(logic.numTour);
   }
 
   function generate_table() {
@@ -366,7 +435,7 @@ if(storedArray){
         var cell = document.createElement("td");
         var cellText  = document.createTextNode('0');
         cell.setAttribute('style', 'text-align: right; border: 1px solid white;');
-        cell.setAttribute('class', 'P' + j + 'T' + t + 'C'+ c);
+        cell.setAttribute('id', 'P' + j + 'T' + t + 'C'+ c);
         row.appendChild(cell);
       }
     }
@@ -374,7 +443,7 @@ if(storedArray){
       var cell = document.createElement("td");
       var cellText  = document.createTextNode('0');
       cell.setAttribute('style', 'text-align: right; border: 1px solid white;');
-      cell.setAttribute('class', 'P' + j + 'T' + 9 + 'C'+ c);
+      cell.setAttribute('id', 'P' + j + 'T' + 9 + 'C'+ c);
       row.appendChild(cell);
     }
   
@@ -382,7 +451,7 @@ if(storedArray){
     var cellText  = document.createTextNode('0');
     cell.setAttribute('style', 'text-align: center; border: 1px solid white;');
     cell.setAttribute('rowspan', '2');
-    cell.setAttribute('class', 'P' + j + 'Score');
+    cell.setAttribute('id', 'P' + j + 'Score');
     cell.appendChild(cellText);
     row.appendChild(cell);
   
@@ -396,14 +465,14 @@ if(storedArray){
       var cell2 = document.createElement("td");
       cell2.setAttribute('style', 'text-align: right; border: 1px solid white;');
       cell2.setAttribute('colspan', '2');
-      cell2.setAttribute('class', 'P' + j + 'T' + c + 'CT');
+      cell2.setAttribute('id', 'P' + j + 'T' + c + 'CT');
   
       row2.appendChild(cell2);
     }
     var cell2 = document.createElement("td");
       cell2.setAttribute('style', 'text-align: right; border: 1px solid white;');
       cell2.setAttribute('colspan', '3');
-      cell2.setAttribute('class', 'P' + j + 'T' + 9 + 'CT');
+      cell2.setAttribute('id', 'P' + j + 'T' + 9 + 'CT');
       row2.appendChild(cell2);
     tbody.appendChild(row2);
   }
