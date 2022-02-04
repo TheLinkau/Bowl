@@ -28,7 +28,6 @@ class Logic {
       this.numTour = 0; //0 a nbTourMax exclus
       this.nbTourMax = 10;
       this.finJeu = false;
-      this.storedArray = ['Leo', 'Nathan', 'Théo', 'Toufik'];
   }
 
   /*
@@ -353,18 +352,77 @@ var nbQuilles = Number(window.sessionStorage.getItem("nbQuilles"));
 
 if(storedArray){
   storedArray = storedArray.split(",");
-  
   var logic = new Logic(nbQuilles, storedArray);
 
 
   function input(){
     var input = document.getElementById("score");
-    logic.processInput(input.value);
-
-    //On update le html
+    if(!logic.processInput(input.value)){
+      window.alert('Entrez un score valide !');
+    }
     logic.updateHTML();
+    var idxJoueurActu = logic.indexJoueurActuel;
+    console.log(idxJoueurActu);
+    var JoueurActu = storedArray[idxJoueurActu];
+    var h = document.getElementById("jAct");
+    h.innerHTML = JoueurActu + " à toi de jouer";
+
+
+    if(logic.finJeu){
+      var scoreMax=0;
+      var NomJoueurMax="";
+      scoreMax = logic.getScoreJoueurTour(storedArray[0],9);
+      NomJoueurMax = storedArray[0];
+
+      for(var i = 1; i < storedArray.length; i++){
+        scoreTemp = logic.getScoreJoueurTour(storedArray[i],9);
+        if(scoreTemp>scoreMax){
+           scoreMax = scoreTemp;
+           NomJoueurMax = storedArray[i];
+        }
+      }
+      let c1 = document.getElementById("cadre");
+      var btnR = document.createElement("a");
+
+      btnR.setAttribute('class', 'btn btn-light w-25 mx-2');
+      btnR.setAttribute('href', 'parameter.html');
+      btnR.innerHTML = "Rejouer";
+
+      var btnA= document.createElement("a");
+      btnA.setAttribute('class', 'btn btn-light w-25 mx-2');
+      btnA.setAttribute('href', 'menu.html');
+      btnA.innerHTML = "Accueil";
+
+      var res = document.createElement("h1");
+      res.setAttribute('class', 'text-light mb-4 pb-2 border-bottom w-75 mx-auto');
+      res.innerHTML = "Bravo " + NomJoueurMax + " tu as gagné la partie !";
+
+      let s1 = document.getElementById("score");
+      s1.style.display = "none";
+      let btnS = document.getElementById("btnAddScore");
+      btnS.style.display = "none";
+      let tj = document.getElementById("Tj");
+      tj.style.display = "none";
+
+
+      c1.appendChild(res);
+      c1.appendChild(btnA);
+      c1.appendChild(btnR);
+    }
+    
+
   }
 
+  function joueurActu(){
+    var div = document.getElementById("Tj");
+    var j = document.createElement("h1");
+    j.setAttribute('class', 'text-light mb-4 pb-2 border-bottom w-75 mx-auto');
+    j.setAttribute('id', 'jAct');
+    j.innerHTML = storedArray[0] + " à toi de jouer";
+
+    div.appendChild(j);
+  }
+  
   function generate_table() {
     // get the reference for the body
     var body = document.getElementsByTagName("body")[0];
@@ -374,15 +432,14 @@ if(storedArray){
     // creates a <table> element and a <tbody> element
     var tbl = document.createElement("table");
   
-    tbl.setAttribute('class', 'table table-dark');
+    tbl.setAttribute('class', 'table text-light table-borderless');
     tbl.setAttribute('id', 'myTable');
   
     var tblhead = document.createElement("thead");
     var row = document.createElement("tr");
     var cell = document.createElement("th");
     var cellText = document.createTextNode(" Partie ");
-    cell.setAttribute('style', 'text-align: center; border-bottom: 1px solid white;');
-  
+    cell.setAttribute('style', 'text-align: center; border: 1px solid white;');  
   
   
     cell.appendChild(cellText);
@@ -391,7 +448,7 @@ if(storedArray){
     for (var i = 1; i < 10; i++) {
         var cell = document.createElement("th");
         var cellText = document.createTextNode(i);
-        cell.setAttribute('style', 'text-align: center; border-bottom: 1px solid white;');
+        cell.setAttribute('style', 'text-align: center; border: 1px solid white;');
         cell.setAttribute('colspan', '2');
         cell.appendChild(cellText);
         row.appendChild(cell);
@@ -399,14 +456,14 @@ if(storedArray){
   
     var cell = document.createElement("th");
     var cellText = document.createTextNode(i);
-    cell.setAttribute('style', 'text-align: center; border-bottom: 1px solid white;');
+    cell.setAttribute('style', 'text-align: center; border: 1px solid white;');
     cell.setAttribute('colspan', '3');
     cell.appendChild(cellText);
     row.appendChild(cell);
   
     var cell = document.createElement("th");
     var cellText = document.createTextNode(" Total ");
-    cell.setAttribute('style', 'text-align: center; border-bottom: 1px solid white;');
+    cell.setAttribute('style', 'text-align: center; border: 1px solid white;');
     cell.appendChild(cellText);
     row.appendChild(cell);
   
@@ -436,7 +493,6 @@ if(storedArray){
     for(var t=0; t<9; t++){
       for (var c = 0; c < 2; c++) {
         var cell = document.createElement("td");
-        var cellText  = document.createTextNode('0');
         cell.setAttribute('style', 'text-align: right; border: 1px solid white;');
         cell.setAttribute('id', 'P' + j + 'T' + t + 'C'+ c);
         row.appendChild(cell);
@@ -444,14 +500,13 @@ if(storedArray){
     }
     for (var c = 0; c < 3; c++) {
       var cell = document.createElement("td");
-      var cellText  = document.createTextNode('0');
       cell.setAttribute('style', 'text-align: right; border: 1px solid white;');
       cell.setAttribute('id', 'P' + j + 'T' + 9 + 'C'+ c);
       row.appendChild(cell);
     }
   
     var cell = document.createElement("td");
-    var cellText  = document.createTextNode('0');
+    var cellText  = document.createTextNode(" ");
     cell.setAttribute('style', 'text-align: center; border: 1px solid white;');
     cell.setAttribute('rowspan', '2');
     cell.setAttribute('id', 'P' + j + 'Score');
