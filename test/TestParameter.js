@@ -27,11 +27,19 @@ describe('Fonctions parameters.js', function () {
     });
   });
   describe('sendPlayers()', function() {
-    it('Quand on a ajouté au moins un joueur', function() {
+    it('Quand on a ajouté au moins un joueur et nb quilles € [1;10]', function () {
+      global.document.getElementById("nbQuilles").value = 5;
+      myModule.addPlayer();
       assert.equal(myModule.sendPlayers(), true);
     });
-    it('Quand on a ajouté aucun joueur', function () {
+    it('Quand on a ajouté aucun joueur et nb quilles in [1;10]', function () {
+      global.document.getElementById("nbQuilles").value = 5;
       global.document.getElementById("players").innerHTML = '';
+      assert.equal(myModule.sendPlayers(), false);
+    });
+    it('Quand on a ajouté au moins un joueur et nb quilles not in [1;10]', function () {
+      global.document.getElementById("nbQuilles").value = -5;
+      myModule.addPlayer();
       assert.equal(myModule.sendPlayers(), false);
     });
   });
