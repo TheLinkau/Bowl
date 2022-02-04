@@ -50,9 +50,6 @@ class Logic {
       this.finJeu = true;
     }
 
-    //On update le html
-    this.updateHTML();
-
     return true;
   }
 
@@ -360,6 +357,9 @@ if(storedArray){
   function input(){
     var input = document.getElementById("score");
     logic.processInput(input.value);
+
+    //On update le html
+    logic.updateHTML();
   }
 
   function generate_table() {
