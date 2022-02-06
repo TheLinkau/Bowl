@@ -349,7 +349,6 @@ class Logic {
 var storedArray = window.sessionStorage.getItem("playersNames");
 var nbQuilles = Number(window.sessionStorage.getItem("nbQuilles"));
 
-
 if(storedArray){
   storedArray = storedArray.split(",");
   var logic = new Logic(nbQuilles, storedArray);
@@ -369,82 +368,101 @@ if(storedArray){
 
 
     if(logic.finJeu){
-
-      // Récupération des records
-      tabBestScores = [];
-      for(var i=1; i<=5; i++) {
-        var item = localStorage.getItem("rank"+i);
-        if(item != null) {
-            player = item.split(",")[0];
-            score = item.split(",")[1];
-            tabBestScores.push([player, parseInt(score)]);
-        }else {
-            tabBestScores.push(["", 0]);
-        }
-      }
-      // Check si un joueur entre dans les records
-      logic.listeJoueur.forEach((player, index) => {
-        scorePlayer = logic.getScoreJoueur(player);
-        for(var i=0; i<5; i++) {
-          if(scorePlayer > tabBestScores[i][1]) {
-            tabBestScores.push([player, scorePlayer]);
-            tabBestScores.sort(function(a, b) {
-              return b[1] - a[1];
-            });
-            break;
+        // Récupération des records
+        tabBestScores = [];
+        for(var i=1; i<=5; i++) {
+          var item = localStorage.getItem("rank"+i);
+          if(item != null) {
+              player = item.split(",")[0];
+              score = item.split(",")[1];
+              tabBestScores.push([player, parseInt(score)]);
+          }else {
+              tabBestScores.push(["", 0]);
           }
         }
-      })
-      console.log(tabBestScores);
-      // Insertion des records
-      for(var i=1; i<=5; i++) {
-        if(tabBestScores[i-1][0] != "") {
-          localStorage.setItem("rank"+i, tabBestScores[i-1]);
+        // Check si un joueur entre dans les records
+        logic.listeJoueur.forEach((player, index) => {
+          scorePlayer = logic.getScoreJoueur(player);
+          for(var i=0; i<5; i++) {
+            if(scorePlayer > tabBestScores[i][1]) {
+              tabBestScores.push([player, scorePlayer]);
+              tabBestScores.sort(function(a, b) {
+                return b[1] - a[1];
+              });
+              break;
+            }
+          }
+        })
+        console.log(tabBestScores);
+        // Insertion des records
+        for(var i=1; i<=5; i++) {
+          if(tabBestScores[i-1][0] != "") {
+            localStorage.setItem("rank"+i, tabBestScores[i-1]);
+          }
         }
-      }
 
-      var scoreMax=0;
-      var NomJoueurMax="";
-      scoreMax = logic.getScoreJoueur(storedArray[0]);
-      NomJoueurMax = storedArray[0];
+        var scoreMax=0;
+        var NomJoueurMax="";
+        scoreMax = logic.getScoreJoueur(storedArray[0]);
+        NomJoueurMax = storedArray[0];
 
-      for(var i = 1; i < storedArray.length; i++){
-        scoreTemp = logic.getScoreJoueur(storedArray[i]);
-        if(scoreTemp>scoreMax){
-           scoreMax = scoreTemp;
-           NomJoueurMax = storedArray[i];
+        for(var i = 1; i < storedArray.length; i++){
+          scoreTemp = logic.getScoreJoueur(storedArray[i]);
+          if(scoreTemp>scoreMax){
+            scoreMax = scoreTemp;
+            NomJoueurMax = storedArray[i];
+          }
         }
+
+        var tabGagnant = [NomJoueurMax];
+        var egalite = false;
+        for(var i =0; i<storedArray.length; i++){
+            if(logic.getScoreJoueur(storedArray[i])==logic.getScoreJoueur(NomJoueurMax) && NomJoueurMax!= storedArray[i]){
+              tabGagnant.push(storedArray[i]);
+              egalite = true;
+            }
+        }
+
+        let c1 = document.getElementById("cadre");
+        var btnR = document.createElement("a");
+
+        btnR.setAttribute('class', 'btn btn-light w-25 mx-2');
+        btnR.setAttribute('href', 'parameter.html');
+        btnR.innerHTML = "Rejouer";
+
+        var btnA= document.createElement("a");
+        btnA.setAttribute('class', 'btn btn-light w-25 mx-2');
+        btnA.setAttribute('href', 'menu.html');
+        btnA.innerHTML = "Accueil";
+
+        if(egalite ==false){
+          var res = document.createElement("h1");
+          res.setAttribute('class', 'text-light mb-4 pb-2 border-bottom w-75 mx-auto');
+          res.innerHTML = "Bravo " + NomJoueurMax + " tu as gagné la partie !";
+        }else{
+          var JoueurGagnant ="";
+          for(var i = 0; i<tabGagnant.length; i++){
+            JoueurGagnant += tabGagnant[i];
+            if(i!=tabGagnant.length-1){
+              JoueurGagnant += ", ";
+            }
+          }
+          var res = document.createElement("h1");
+          res.setAttribute('class', 'text-light mb-4 pb-2 border-bottom w-75 mx-auto');
+          res.innerHTML = "Bravo " + JoueurGagnant + " vous avez gagné la partie !";
+        }
+        let s1 = document.getElementById("score");
+        s1.style.display = "none";
+        let btnS = document.getElementById("btnAddScore");
+        btnS.style.display = "none";
+        let tj = document.getElementById("Tj");
+        tj.style.display = "none";
+
+
+        c1.appendChild(res);
+        c1.appendChild(btnA);
+        c1.appendChild(btnR);
       }
-      let c1 = document.getElementById("cadre");
-      var btnR = document.createElement("a");
-
-      btnR.setAttribute('class', 'btn btn-light w-25 mx-2');
-      btnR.setAttribute('href', 'parameter.html');
-      btnR.innerHTML = "Rejouer";
-
-      var btnA= document.createElement("a");
-      btnA.setAttribute('class', 'btn btn-light w-25 mx-2');
-      btnA.setAttribute('href', 'menu.html');
-      btnA.innerHTML = "Accueil";
-
-      var res = document.createElement("h1");
-      res.setAttribute('class', 'text-light mb-4 pb-2 border-bottom w-75 mx-auto');
-      res.innerHTML = "Bravo " + NomJoueurMax + " tu as gagné la partie !";
-
-      let s1 = document.getElementById("score");
-      s1.style.display = "none";
-      let btnS = document.getElementById("btnAddScore");
-      btnS.style.display = "none";
-      let tj = document.getElementById("Tj");
-      tj.style.display = "none";
-
-
-      c1.appendChild(res);
-      c1.appendChild(btnA);
-      c1.appendChild(btnR);
-    }
-    
-
   }
 
   function joueurActu(){
@@ -577,7 +595,6 @@ if(storedArray){
       }
     }
   }
-  
 }
 
 module.exports = Logic;
