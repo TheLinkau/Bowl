@@ -405,11 +405,11 @@ if(storedArray){
 
       var scoreMax=0;
       var NomJoueurMax="";
-      scoreMax = logic.getScoreJoueurTour(storedArray[0],9);
+      scoreMax = logic.getScoreJoueur(storedArray[0]);
       NomJoueurMax = storedArray[0];
 
       for(var i = 1; i < storedArray.length; i++){
-        scoreTemp = logic.getScoreJoueurTour(storedArray[i],9);
+        scoreTemp = logic.getScoreJoueur(storedArray[i]);
         if(scoreTemp>scoreMax){
            scoreMax = scoreTemp;
            NomJoueurMax = storedArray[i];
