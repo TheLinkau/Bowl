@@ -369,6 +369,40 @@ if(storedArray){
 
 
     if(logic.finJeu){
+
+      // Récupération des records
+      tabBestScores = [];
+      for(var i=1; i<=5; i++) {
+        var item = localStorage.getItem("rank"+i);
+        if(item != null) {
+            player = item.split(",")[0];
+            score = item.split(",")[1];
+            tabBestScores.push([player, parseInt(score)]);
+        }else {
+            tabBestScores.push(["", 0]);
+        }
+      }
+      // Check si un joueur entre dans les records
+      logic.listeJoueur.forEach((player, index) => {
+        scorePlayer = logic.getScoreJoueur(player);
+        for(var i=0; i<5; i++) {
+          if(scorePlayer > tabBestScores[i][1]) {
+            tabBestScores.push([player, scorePlayer]);
+            tabBestScores.sort(function(a, b) {
+              return b[1] - a[1];
+            });
+            break;
+          }
+        }
+      })
+      console.log(tabBestScores);
+      // Insertion des records
+      for(var i=1; i<=5; i++) {
+        if(tabBestScores[i-1][0] != "") {
+          localStorage.setItem("rank"+i, tabBestScores[i-1]);
+        }
+      }
+
       var scoreMax=0;
       var NomJoueurMax="";
       scoreMax = logic.getScoreJoueurTour(storedArray[0],9);
