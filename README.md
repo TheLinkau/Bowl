@@ -40,3 +40,19 @@ Propositions de solutions pour les points négatifs :
 ####
 * Avoir plus de cohésion et faire plus de commit pour rassembler plus rapidemment le travail de tout le monde
 * Plus d'explications sur les méthodes utilisés pour que tout le monde utilise les mêmes
+
+## IV/ Commentaire Enseignant
+Le travail a presque été trop répartie, spécialisant chacune des personnes et pouvant mettre à mal le projets si l'un des participant était tombé malade par exemple.
+L'intégration du travail de chacun n'a pas été continue et à engendré beaucoup de tension lors de la première intégration qui a amené une première version testable par une utilisateur que beaucoup trop tard dans le projet. Si j'avais attendu la première version testable j'aurais fait mes premiers retour beaucoup trop tard pour qu'ils puissent être intégré dans la version finale. Le but de la méthodologie est de faire des erreurs pour les comprendre et ne plus les refaire. Les erreurs ont été plutôt bien analysées et corrigées sur la toute fin du projets.
+
+Le code est plutôt bien commenté même si il y a des commentaires inutile, d'autre pas à jours (des commentaires font référence à 10 quilles) et certains énigmatiques:
+ex: //On rempli les variables
+    this.addCoups(nbQuille);
+    if(this.numTour >= this.nbTourMax)
+      this.finJeu = true;
+      
+Les histoires sont à peine définies, et ne sont même pas fermées dans le gestionnaires de projets.      
+
+Beaucoup de commit avec un message inexplicite ("update fichier", voir "commit")
+
+
